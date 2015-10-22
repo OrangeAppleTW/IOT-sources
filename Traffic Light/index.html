@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LED</title>
+  <script src="../js/setup.js"></script>
+</head>
+<body>
+    <oa-trafficLight id="light"></oa-trafficLight>
+    <web-arduino id="board" device='3Q55'>
+      <wa-led id='led_R' pin='10'></wa-led>
+      <wa-led id='led_G' pin='8'></wa-led>
+      <wa-led id='led_Y' pin='6'></wa-led>
+      <wa-button pin='11'></wa-button>
+    </web-arduino>
+</body>
+</html>
+

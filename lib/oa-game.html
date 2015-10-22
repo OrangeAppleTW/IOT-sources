@@ -1,0 +1,126 @@
+<!-- Defines element markup -->
+<template>
+    <style>
+        #game {
+            width: 600px;
+            height: 300px;
+            margin: 50px auto;
+        }
+        #offline-resources{
+            display: none;
+        }
+        .runner-container {
+          height: 150px;
+          max-width: 600px;
+          overflow: hidden;
+          position: absolute;
+          top: 10px;
+          width: 44px;
+          z-index: 2;
+        }
+        .controller {
+          background: rgba(247,247,247, .1);
+          height: 100vh;
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 100vw;
+          z-index: 1;
+        }
+        .interstitial-wrapper{
+          max-width: 600px;
+          position: relative;
+          margin: 5px auto;
+        }
+    </style>
+    <div id="game">
+        <div id="main-frame-error" class="interstitial-wrapper" jstcache="0">
+          <img class="icon icon-offline" jseval="updateIconClass(this.classList, iconClass)" jstcache="1" style="visibility: hidden;">
+        </div>
+        <div id="offline-resources" jstcache="0">
+            <div id="offline-resources-1x" jstcache="0">
+                <img id="x1-obstacle-large" src="../img/1x-obstacle-large.png" jstcache="0">
+                <img id="x1-obstacle-small" src="../img/1x-obstacle-small.png" jstcache="0">
+                <img id="x1-cloud" src="../img/1x-cloud.png" jstcache="0">
+                <img id="x1-text" src="../img/1x-text.png" jstcache="0">
+                <img id="x1-horizon" src="../img/1x-horizon.png" jstcache="0">
+                <img id="x1-trex" src="../img/1x-trex.png" jstcache="0">
+                <img id="x1-restart" src="../img/1x-restart.png" jstcache="0">
+            </div>
+            <div id="offline-resources-2x" jstcache="0">
+                <img id="x2-obstacle-large" src="../img/2x-obstacle-large.png" jstcache="0">
+                <img id="x2-obstacle-small" src="../img/2x-obstacle-small.png" jstcache="0">
+                <img id="x2-cloud" src="../img/2x-cloud.png" jstcache="0">
+                <img id="x2-text" src="../img/2x-text.png" jstcache="0">
+                <img id="x2-horizon" src="../img/2x-horizon.png" jstcache="0">
+                <img id="x2-trex" src="../img/2x-trex.png" jstcache="0">
+                <img id="x2-restart" src="../img/2x-restart.png" jstcache="0">
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+(function(window, document, undefined) {
+    // Refers to the "importer", which is index.html
+    var thatDoc = document;
+
+    // Refers to the "importee", which is src/hello-world.html
+    var thisDoc =  (thatDoc._currentScript || thatDoc.currentScript).ownerDocument;
+
+    // Gets content from <template>
+    var template = thisDoc.querySelector('template').content;
+
+    // Creates an object based in the HTML Element prototype
+    var ElementProto = Object.create(HTMLElement.prototype);
+
+    // Fires when an instance of the element is created
+    ElementProto.createdCallback = function() {
+        // Creates the shadow root
+        var shadowRoot = this.createShadowRoot();
+
+        // Adds a template clone into shadow root
+        var clone = thatDoc.importNode(template, true);
+        shadowRoot.appendChild(clone);
+
+        // Caches the div
+        this.div = shadowRoot.querySelector("#game");
+
+        // Create attribute
+        this.state = 'stop'
+        this.score = 0
+        this.highestScore = 0
+
+        // Load runner js
+        $.getScript('../js/runner.js', $.proxy(function(){
+            this.runner = new Runner('.interstitial-wrapper', this, document);
+        }, this));
+
+    };
+
+    // Fires when an attribute was added, removed, or updated
+    ElementProto.attributeChangedCallback = function(attr, oldVal, newVal) {
+        if (attr === 'data-state') {
+            this.state = newVal || 'stop';
+            this.score = this.runner.distanceMeter.getActualDistance(this.runner.distanceRan);
+            $(this).trigger('stateChange');
+        }
+        else if (attr === 'data-highest-score') {
+            this.highestScore = +newVal;
+        }
+    };
+    // Events
+    ElementProto.jump = function(){
+        this.runner.handleEvent({'keyCode': 38, 'type': 'mousedown'});
+    }
+    ElementProto.start = function(){
+        this.runner.handleEvent({'keyCode': 38, 'type': 'mousedown'});
+        this.runner.handleEvent({'keyCode': 38, 'type': 'mouseup'});
+    }
+
+    // Registers <oa-game> in the main document
+    window.OaElement = thatDoc.registerElement('oa-game', {
+        prototype: ElementProto
+    });
+})(window, document);
+</script>

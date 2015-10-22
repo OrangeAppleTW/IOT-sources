@@ -1,0 +1,215 @@
+<!-- Defines element markup -->
+<template>
+    <style>
+        #light {
+            padding: 40px;
+            width: 170px;
+            height: 600px;
+            margin: 0 auto;;
+        }
+        .trafficlight{
+          background: #222;
+          background-image: linear-gradient(transparent 2%, #111 2%, transparent 3%, #111 30%);
+          width: 170px;
+          height: 400px;
+          border-radius: 20px;
+          position: relative;
+          border: solid 5px #333;
+        }
+
+        .trafficlight:before{
+          background: #222;
+          background-image: radial-gradient(#444, #000);
+          content: "";
+          width: 170px;
+          height: 150px;
+          margin: 0 auto;
+          position: absolute;
+          top: -20px;
+          margin-left: 0px;
+          border-radius: 50%;
+          z-index: -1;
+        }
+
+        .trafficlight:after{
+          background: #222;
+          background-image: linear-gradient(-90deg, #222 0%, #444 30%, #000);
+          content: "";
+          width: 50px;
+          height: 500px;
+          margin-left: 60px;
+          position: absolute;
+          top: 150px;
+          z-index: -1;
+        }
+
+        .protector{
+          background: transparent;
+          width: 180px;
+          height: 0;
+          position: absolute;
+          top: 20px;
+          left: -35px;
+          border-right: solid 30px transparent;
+          border-left: solid 30px transparent;
+          border-top: solid 90px #111;
+          border-radius: 10px;
+          z-index: -1;
+        }
+
+        .protector:nth-child(2){
+          top: 140px;
+        }
+
+        .protector:nth-child(3){
+          top: 260px;
+        }
+
+        .red{
+          background: red;
+          background-image: radial-gradient(brown, transparent);
+          background-size: 5px 5px;
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          position: absolute;
+          top: 20px;
+          left: 35px;
+          border: dotted 2px red;
+          box-shadow:
+            0 0 20px #111 inset,
+            0 0 10px red;
+        }
+
+        .yellow{
+          background: yellow;
+          background-image: radial-gradient(orange, transparent);
+          background-size: 5px 5px;
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          border: dotted 2px yellow;
+          position: absolute;
+          top: 145px;
+          left: 35px;
+          box-shadow:
+            0 0 20px #111 inset,
+            0 0 10px yellow;
+        }
+
+        .green{
+          background: green;
+          background-image: radial-gradient(lime, transparent);
+          background-size: 5px 5px;
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          border: dotted 2px lime;
+          position: absolute;
+          top: 270px;
+          left: 35px;
+          box-shadow:
+            0 0 20px #111 inset,
+            0 0 10px lime;
+        }
+        .symbol{
+            opacity: .3;
+        }
+
+        @keyframes on{
+          0%{opacity: .3}
+          100%{opacity: 1}
+        }
+
+        @keyframes off{
+          0%{opacity: 1}
+          100%{opacity: .3}
+        }
+
+    </style>
+    <div id="light">
+        <div class="trafficlight">
+          <div class="protector"></div>
+          <div class="protector"></div>
+          <div class="protector"></div>
+          <div id="red" class='symbol red'></div>
+          <div id="yellow" class='symbol yellow'></div>
+          <div id="green" class='symbol green'></div>
+        </div>
+    </div>
+</template>
+
+<script>
+(function(window, document, undefined) {
+    // Refers to the "importer", which is index.html
+    var thatDoc = document;
+
+    // Refers to the "importee", which is src/hello-world.html
+    var thisDoc =  (thatDoc._currentScript || thatDoc.currentScript).ownerDocument;
+
+    // Gets content from <template>
+    var template = thisDoc.querySelector('template').content;
+
+    // Creates an object based in the HTML Element prototype
+    var ElementProto = Object.create(HTMLElement.prototype);
+
+    // Fires when an instance of the element is created
+    ElementProto.createdCallback = function() {
+        // Creates the shadow root
+        var shadowRoot = this.createShadowRoot();
+
+        // Adds a template clone into shadow root
+        var clone = thatDoc.importNode(template, true);
+        shadowRoot.appendChild(clone);
+
+        // Caches
+        this.div = shadowRoot.querySelector("#light");
+        this.red = shadowRoot.querySelector("#red");
+        this._red = 'off';
+        this.green = shadowRoot.querySelector("#green");
+        this._green = 'off';
+        this.yellow = shadowRoot.querySelector("#yellow");
+        this._yellow = 'off';
+    };
+
+    Object.defineProperty(ElementProto, 'Red', {
+        get: function(){
+            return this._red
+        },
+        set: function(newVal){
+            this.setState(newVal, this.red);
+        }
+    });
+    Object.defineProperty(ElementProto, 'Yellow', {
+        get: function(){
+            return this._yellow
+        },
+        set: function(newVal){
+            this.setState(newVal, this.yellow);
+        }
+    });
+    Object.defineProperty(ElementProto, 'Green', {
+        get: function(){
+            return this._green
+        },
+        set: function(newVal){
+            this.setState(newVal, this.green);
+        }
+    });
+    // Sets new value to "state" attribute
+    ElementProto.setState = function(val, light) {
+        console.log(light);
+        if (val == 'on'){
+            light.style.webkitAnimation = 'on 1s 0s 1 forwards';
+        }
+        else {
+            light.style.webkitAnimation = 'off 1s 0s 1 forwards';
+        }
+    };
+
+    // Registers <oa-trafficLight> in the main document
+    window.OaElement = thatDoc.registerElement('oa-trafficLight', {
+        prototype: ElementProto
+    });
+})(window, document);
+</script>
