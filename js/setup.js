@@ -8,6 +8,8 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
 $(document).ready(function(){
   // Load all related files
   var load = $.Deferred(function(promise) {
+    // https://rawgit.com/OrangeAppleTW/IOT-sources/master/lib/head.html
+    // ../lib/head.html
     $("head").load("https://rawgit.com/OrangeAppleTW/IOT-sources/master/lib/head.html", function(response, status, xhr){
       if (status == 'success'){
         // Register variables
@@ -36,18 +38,18 @@ $(document).ready(function(){
         console.log('Failure response: ' + response);
         promise.reject();
       }
-
     });
   });
   $.when(load)
     .then(function(){
       window.addEventListener('WebComponentsReady', function() {
-        board.on('ready', function(){
+        console.log(board.on);
+        $(board).on('ready', function(){
           $('wa-button').each(function(){
             this.on('pressed', buttonHandler);
           });
+          main();
         })
-        main();
       });
       console.log('Success');})
     .fail(function(){
