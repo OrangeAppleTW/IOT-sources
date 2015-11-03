@@ -43,7 +43,6 @@ $(document).ready(function(){
   $.when(load)
     .then(function(){
       window.addEventListener('WebComponentsReady', function() {
-        console.log(board.on);
         $(board).on('ready', function(){
           $('wa-button').each(function(){
             this.on('pressed', buttonHandler);
