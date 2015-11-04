@@ -1,10 +1,10 @@
 function buttonHandler(){
-  led_R.on();
-  led_Y.off();
-  led_G.off();
-  light.Red = 'on';
-  light.Yellow = 'off';
-  light.Green = 'on';
+    led_R.on();
+    led_Y.off();
+    led_G.off();
+    light.Red = 'on';
+    light.Yellow = 'off';
+    light.Green = 'off';
   setTimeout(function(){
     led_Y.on();
     light.Yellow = 'on';

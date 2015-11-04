@@ -10,7 +10,7 @@ $(document).ready(function(){
   var load = $.Deferred(function(promise) {
     // https://rawgit.com/OrangeAppleTW/IOT-sources/master/lib/head.html
     // ../lib/head.html
-    $("head").load("https://rawgit.com/OrangeAppleTW/IOT-sources/master/lib/head.html", function(response, status, xhr){
+    $("head").load("../lib/head.html", function(response, status, xhr){
       if (status == 'success'){
         // Register variables
         $('[id]').each(function(){
@@ -32,6 +32,11 @@ $(document).ready(function(){
             main();
           })
         })
+        $('oa-colorPicker').each(function(){
+          $(this).on('colorChange', function(){
+            main();
+          })
+        })
         promise.resolve();
       }
       else {
@@ -47,7 +52,7 @@ $(document).ready(function(){
           $('wa-button').each(function(){
             this.on('pressed', buttonHandler);
           });
-          main();
+          // main();
         })
       });
       console.log('Success');})

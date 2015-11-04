@@ -1,0 +1,233 @@
+<!-- Defines element markup -->
+<template>
+    <style>
+    .ui-slider {
+        position: relative;
+        text-align: left;
+    }
+    .ui-slider,
+    .ui-slider-range {
+        box-shadow:0 0 2px rgba(0,0,0,.3) inset;
+        border-radius:999px;
+    }
+    .ui-slider .ui-slider-handle {
+        position: absolute;
+        z-index: 2;
+        width: 1.4em;
+        height: 1.4em;
+        border:1px solid rgba(64,69,77,1);
+        cursor: pointer;
+        box-shadow: 0 0.25em 0.75em rgba(0, 0, 0, 0.3);
+        background: rgb(86,89,97);
+    }
+    .ui-slider .ui-slider-handle:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 4px; right: 4px; bottom: 4px; left: 4px; z-index: -1;
+        border-radius: 100em;
+        border: 1px solid rgba(64,69,77,.5);
+        background: rgb(64,69,77);
+    }
+    .ui-slider .ui-slider-range {
+        position: absolute;
+        z-index: 1;
+        font-size: .7em;
+        display: block;
+        border: 0;
+        background-position: 0 0;
+    }
+    .ui-slider-vertical {
+        width: .8em;
+        height: 100px;
+    }
+    .ui-slider-vertical .ui-slider-handle {
+        left: -.425em;
+        margin-left: 0;
+        margin-bottom: -.6em;
+    }
+    .ui-slider-vertical .ui-slider-range {
+        left: 0;
+        width: 100%;
+    }
+    .ui-slider-vertical .ui-slider-range-min {
+        bottom: 0;
+    }
+    .ui-slider-vertical .ui-slider-range-max {
+        top: 0;
+    }
+    .ui-widget-content {
+        border: 1px solid #aaaaaa;
+        background: #f3f3f3;
+        color: #222222;
+    }
+    .ui-widget-content a {
+        color: #222222;
+    }
+    .ui-widget-header {
+        border: 1px solid #aaaaaa;
+        background: #cccccc;
+        color: #222222;
+        font-weight: bold;
+    }
+    .ui-widget-header a {
+        color: #222222;
+    }
+    .ui-state-default,
+    .ui-widget-content .ui-state-default,
+    .ui-widget-header .ui-state-default {
+        border-radius:999px;
+    }
+    .ui-state-default a,
+    .ui-state-default a:link,
+    .ui-state-default a:visited {
+        color: #555555;
+        text-decoration: none;
+    }
+    .ui-widget-overlay {
+        background: #aaaaaa;
+        opacity: .3;
+        filter: Alpha(Opacity=30);
+    }
+    #red, #green, #blue {
+        display:inline-block;
+        width: 12px;
+        height:100px;
+        margin: 0 10px;
+    }
+    #swatch {
+        position: relative;
+        height:240px;
+        width:240px;
+        display:block;
+        background-image: none;
+        border-radius:9999px;
+        margin:50px auto;
+        border:1px solid #111;
+        box-shadow:0 0 10px 2px rgba(0,0,0,.5) inset;
+    }
+    .slide_wrapper {
+        position:relative;
+        display:inline-block;
+        border-radius:9999px;
+        padding:40px 38px;
+        margin:27px;
+        box-shadow:0 0 8px rgba(0,0,0,.5);
+        background: -webkit-radial-gradient( 50% 0%, 8% 50%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%), -webkit-radial-gradient( 50% 100%, 12% 50%, hsla(0,0%,100%,.6) 0%, hsla(0,0%,100%,0) 100%), -webkit-radial-gradient( 0% 50%, 50% 7%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%), -webkit-radial-gradient( 100% 50%, 50% 5%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%), -webkit-repeating-radial-gradient( 50% 50%, 100% 100%, hsla(0,0%, 0%,0) 0%, hsla(0,0%, 0%,0) 3%, hsla(0,0%, 0%,.1) 3.5%), -webkit-repeating-radial-gradient( 50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 6%, hsla(0,0%,100%,.1) 7.5%), -webkit-repeating-radial-gradient( 50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.2) 2.2%), -webkit-radial-gradient( 50% 50%, 200% 50%, hsla(0,0%,90%,1) 5%, hsla(0,0%,85%,1) 30%, hsla(0,0%,60%,1) 100%);
+    }
+    #red .ui-slider-range {
+        background: red;
+    }
+    #green .ui-slider-range {
+        background: green;
+    }
+    #blue .ui-slider-range {
+        background: blue;
+    }
+    </style>
+    <div id="picker">
+        <div id="swatch">
+            <div class="slide_wrapper">
+                <div id="red"></div>
+                <div id="green"></div>
+                <div id="blue"></div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+(function(window, document, undefined) {
+    // Refers to the "importer", which is index.html
+    var thatDoc = document;
+
+    // Refers to the "importee", which is src/oa-colorPicker.html
+    var thisDoc =  (thatDoc._currentScript || thatDoc.currentScript).ownerDocument;
+
+    // Gets content from <template>
+    var template = thisDoc.querySelector('template').content;
+
+    // Creates an object based in the HTML Element prototype
+    var ElementProto = Object.create(HTMLElement.prototype);
+
+    // Fires when an instance of the element is created
+    ElementProto.createdCallback = function() {
+        // Creates the shadow root
+        var shadowRoot = this.createShadowRoot();
+
+        // Adds a template clone into shadow root
+        var clone = thatDoc.importNode(template, true);
+        shadowRoot.appendChild(clone);
+
+        // Caches the div
+        this.div = shadowRoot.querySelector("#picker");
+        this.red = shadowRoot.querySelector("#red");
+        this.green = shadowRoot.querySelector("#green");
+        this.blue = shadowRoot.querySelector("#blue");
+        this.swatch = shadowRoot.querySelector("#swatch");
+        var Red = shadowRoot.querySelector("#red"),
+            Green = shadowRoot.querySelector("#green"),
+            Blue = shadowRoot.querySelector("#blue"),
+            swatch = shadowRoot.querySelector("#swatch");
+
+        function hexFromRGB(r, g, b) {
+            var hex = [
+                r.toString(16),
+                g.toString(16),
+                b.toString(16)
+            ];
+            $.each(hex, function(nr, val) {
+                if (val.length === 1) {
+                    hex[nr] = "0" + val;
+                }
+            });
+            return hex.join("").toUpperCase();
+        }
+
+        function refreshSwatch() {
+            var red = $(this.red).slider("value"),
+                green = $(this.green).slider("value"),
+                blue = $(this.blue).slider("value"),
+                hex = hexFromRGB(red, green, blue);
+            $(this.swatch).css("background-color", "#" + hex);
+            $(this).trigger('colorChange');
+        }
+        var properties = {
+            orientation: "vertical",
+            range: "min",
+            max: 255,
+            step: 1,
+            value: 120,
+            slide: $.proxy(refreshSwatch, this),
+            change: $.proxy(refreshSwatch, this),
+        }
+
+        $(this.red).slider(properties);
+        $(this.green).slider(properties);
+        $(this.blue).slider(properties);
+        $(this.swatch).css("background-color", "#" + hexFromRGB(120, 120, 120));
+
+
+    };
+
+    // Fires when an attribute was added, removed, or updated
+    ElementProto.attributeChangedCallback = function(attr, oldVal, newVal) {
+
+    };
+    // Attach get function of color
+    ElementProto.Red = function() {
+        return $(this.red).slider("value");
+    }
+    ElementProto.Green = function() {
+        return $(this.green).slider("value");
+    }
+    ElementProto.Blue = function() {
+        return $(this.blue).slider("value");
+    }
+
+    // Registers <oa-colorPicker> in the main document
+    window.OaElement = thatDoc.registerElement('oa-colorPicker', {
+        prototype: ElementProto
+    });
+})(window, document);
+</script>

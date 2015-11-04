@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tri-Color LED</title>
+  <script src='../js/setup.js'></script>
+</head>
+<body>
+    <oa-colorPicker id="picker"></oa-colorPicker>
+    <web-arduino id="board" device='3Q55'>
+      <wa-rgbled id='rgb' red='11' blue='6' green='9'></wa-rgbled>
+    </web-arduino>
+</body>
+</html>
