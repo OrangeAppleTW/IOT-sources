@@ -16,7 +16,6 @@ $(document).ready(function(){
         $('[id]').each(function(){
           window[this.id] = document.getElementById(this.id);
         })
-        Register events
         $('oa-light').each(function(){
           $(this).on('click', function(){
             main();
@@ -41,9 +40,6 @@ $(document).ready(function(){
           $(this).on('noteChange', function(){
             pianoHandler();
           })
-        })
-        $(window).on('test', function(){
-          pianoHandler();
         })
         promise.resolve();
       }
