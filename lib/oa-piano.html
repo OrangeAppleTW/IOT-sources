@@ -1,0 +1,166 @@
+<!-- Defines element markup -->
+<template>
+    <style>
+        #piano {
+          font-family: "Open Sans Condensed";
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background: #22475E;
+          padding: .25rem 1rem;
+          height: 400px;
+          width: 700px;
+          margin: 0 auto;
+        }
+
+        #keyboard {
+          width: 40rem;
+          text-align: center;
+          position: relative;
+        }
+
+        .key {
+            display: inline-block;
+            position: relative;
+            width: 11.111%;
+            padding-bottom: 35%;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,.3);
+            background: ivory;
+            vertical-align: top;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 1s;
+            color: rgba(255,255,255, .3);
+        }
+
+        .key:after {
+            display: block;
+            font-family: "Open Sans Condensed";
+            font-size: 1.5rem;
+            line-height: 2;
+            text-align: center;
+            content: attr(data-note);
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+        }
+
+        .key:hover {
+            background: shade(ivory, 10%);
+            transition: .2s;
+        }
+
+        .key:focus { outline: 0; }
+
+        .key.active {
+            animation: whites 300ms;
+        }
+
+        .sharp {
+          position: absolute;
+          z-index: 100;
+          width: 12.5%;
+          background: #111;
+          transform-origin: center top;
+          transform: translateX(-50%) scale(.6);
+          border-radius: 0 0 8px 8px;
+        }
+
+        .sharp:after {
+            font-size: 2.5rem;
+            top: inherit;
+            bottom: 100%;
+        }
+
+        .sharp:hover {
+            background: rgba(0,0,0,0.85);
+        }
+
+        .sharp.active {
+            animation: blacks 300ms;
+        }
+        @keyframes whites {
+          from {
+            background: rgba(255,255,255,0.85);
+            color: ivory;
+            text-shadow: 0 0 1rem, 0 0 2rem, 0 0 3rem;
+          }
+        }
+        @keyframes blacks {
+           from {
+            background: rgba(0,0,0,0.85);
+            color: ivory;
+            text-shadow: 0 0 1rem, 0 0 2rem, 0 0 3rem;
+          }
+        }
+    </style>
+    <div id="piano">
+        <div id="keyboard">
+            <button class="key" data-note="C6" data-octave="5"></button>
+            <button class="key sharp" data-note="CS6" data-octave="5"></button>
+            <button class="key" data-note="D6" data-octave="5"></button>
+            <button class="key sharp" data-note="DS6" data-octave="5"></button>
+            <button class="key" data-note="E6" data-octave="5"></button>
+            <button class="key" data-note="F6" data-octave="5"></button>
+            <button class="key sharp" data-note="FS6" data-octave="5"></button>
+            <button class="key" data-note="G6" data-octave="5"></button>
+            <button class="key sharp" data-note="GS6" data-octave="5"></button>
+            <button class="key" data-note="A6" data-octave="5"></button>
+            <button class="key sharp" data-note="AS6" data-octave="5"></button>
+            <button class="key" data-note="B6" data-octave="5"></button>
+        </div>
+    </div>
+</template>
+
+<script>
+(function(window, document, undefined) {
+    // Refers to the "importer", which is index.html
+    var thatDoc = document;
+
+    // Refers to the "importee", which is src/oa-piano.html
+    var thisDoc =  (thatDoc._currentScript || thatDoc.currentScript).ownerDocument;
+
+    // Gets content from <template>
+    var template = thisDoc.querySelector('template').content;
+
+    // Creates an object based in the HTML Element prototype
+    var ElementProto = Object.create(HTMLElement.prototype);
+
+    // Fires when an instance of the element is created
+    ElementProto.createdCallback = function() {
+        // Creates the shadow root
+        var shadowRoot = this.createShadowRoot();
+
+        // Adds a template clone into shadow root
+        var clone = thatDoc.importNode(template, true);
+        shadowRoot.appendChild(clone);
+
+        // Caches the div
+        this.div = shadowRoot.querySelector("#piano");
+        this.note = 'C6';
+        // Catches this for setting note in next callback binding
+        var that = this;
+        $(shadowRoot).find('button').on('click', function(event){
+            event.preventDefault();
+            var $this = $(this);
+            that.note = $this.data('note');
+            $this.addClass('active');
+            $('#piano').trigger('test');
+            setTimeout(function(){
+                $this.removeClass('active');
+            }, 300);
+        });
+    };
+
+    ElementProto.Note = function(){
+        return this.note;
+    }
+
+    // Registers <oa-piano> in the main document
+    window.OaElement = thatDoc.registerElement('oa-piano', {
+        prototype: ElementProto
+    });
+})(window, document);
+</script>

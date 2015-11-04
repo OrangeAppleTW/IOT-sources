@@ -16,7 +16,7 @@ $(document).ready(function(){
         $('[id]').each(function(){
           window[this.id] = document.getElementById(this.id);
         })
-        // Register events
+        Register events
         $('oa-light').each(function(){
           $(this).on('click', function(){
             main();
@@ -34,8 +34,16 @@ $(document).ready(function(){
         })
         $('oa-colorPicker').each(function(){
           $(this).on('colorChange', function(){
-            main();
+            pickerHandler();
           })
+        })
+        $('oa-piano').each(function(){
+          $(this).on('noteChange', function(){
+            pianoHandler();
+          })
+        })
+        $(window).on('test', function(){
+          pianoHandler();
         })
         promise.resolve();
       }
@@ -52,7 +60,7 @@ $(document).ready(function(){
           $('wa-button').each(function(){
             this.on('pressed', buttonHandler);
           });
-          // main();
+          main();
         })
       });
       console.log('Success');})

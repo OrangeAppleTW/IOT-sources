@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tri-Color LED</title>
+  <title>Buzzer</title>
   <script src='https://rawgit.com/OrangeAppleTW/IOT-sources/master/js/setup.js'></script>
 </head>
 <body>
-    <oa-colorPicker id="picker"></oa-colorPicker>
+    <oa-piano id='piano'></oa-piano>
     <web-arduino id="board" device='3Q55'>
-      <wa-rgbled id='rgb' red='11' blue='6' green='9'></wa-rgbled>
+      <wa-buzzer id='buzzer' pin='11' notes='C6,0,CS6,0,D6,0' tempos=''></wa-buzzer>
     </web-arduino>
 </body>
 </html>
