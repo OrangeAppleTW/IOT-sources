@@ -147,7 +147,7 @@
             var $this = $(this);
             that.note = $this.data('note');
             $this.addClass('active');
-            $('#piano').trigger('test');
+            $(that).trigger('noteChange');
             setTimeout(function(){
                 $this.removeClass('active');
             }, 300);

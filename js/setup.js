@@ -10,7 +10,7 @@ $(document).ready(function(){
   var load = $.Deferred(function(promise) {
     // https://rawgit.com/OrangeAppleTW/IOT-sources/master/lib/head.html
     // ../lib/head.html
-    $("head").load("https://rawgit.com/OrangeAppleTW/IOT-sources/master/lib/head.html", function(response, status, xhr){
+    $("head").load("../lib/head.html", function(response, status, xhr){
       if (status == 'success'){
         // Register variables
         $('[id]').each(function(){
@@ -54,9 +54,8 @@ $(document).ready(function(){
       window.addEventListener('WebComponentsReady', function() {
         $(board).on('ready', function(){
           $('wa-button').each(function(){
-            this.on('pressed', buttonHandler);
-          });
-          main();
+            $(this).on('pressed', buttonHandler);
+          })
         })
       });
       console.log('Success');})
