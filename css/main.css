@@ -1,11 +1,4 @@
-
-#light.on{
-  width:400px;
-  height: 600px;
-  background-image: url("http://i.imgur.com/8qFj2Ou.png");
-}
-#light.off{
-  width:400px;
-  height: 600px;
-  background-image: url("http://i.imgur.com/T5H4MHE.png");
+body{
+  margin: 0px;
+  padding: 0px;
 }

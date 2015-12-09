@@ -8,38 +8,11 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
 $(document).ready(function(){
   // Load all related files
   var load = $.Deferred(function(promise) {
-    // https://rawgit.com/OrangeAppleTW/IOT-sources/master/lib/head.html
-    // ../lib/head.html
-    $("head").load("../lib/head.html", function(response, status, xhr){
+    $("head").load("head.html", function(response, status, xhr){
       if (status == 'success'){
         // Register variables
         $('[id]').each(function(){
           window[this.id] = document.getElementById(this.id);
-        })
-        $('oa-light').each(function(){
-          $(this).on('click', function(){
-            main();
-          })
-        })
-        $('oa-house').each(function(){
-          $(this).on('classChange', function(){
-            main();
-          })
-        })
-        $('oa-game').each(function(){
-          $(this).on('stateChange', function(){
-            main();
-          })
-        })
-        $('oa-colorPicker').each(function(){
-          $(this).on('colorChange', function(){
-            pickerHandler();
-          })
-        })
-        $('oa-piano').each(function(){
-          $(this).on('noteChange', function(){
-            pianoHandler();
-          })
         })
 
         promise.resolve();
@@ -54,43 +27,10 @@ $(document).ready(function(){
     .then(function(){
       window.addEventListener('WebComponentsReady', function() {
         board.on('ready', function(){
-          $('wa-button').each(function(){
-            $(this).on('pressed', buttonHandler);
-          })
-          $('wa-pir').each(function(){
-            this.on('detected', detected);
-            this.on('ended', ended);
-          })
           $('wa-ultrasonic').each(function(){
             this.ping(ping, 300);
           })
         })
-        // setTimeout(function(){
-        //   $('wa-button').each(function(){
-        //     $(this).on('pressed', buttonHandler);
-        //   })
-        //   $('wa-pir').each(function(){
-        //     this.on('detected', detected);
-        //     this.on('ended', ended);
-        //   })
-        //   $('wa-ultrasonic').each(function(){
-        //     this.ping(ping, 200);
-        //   })
-        //     // board.on('ready', function(){
-        //     //   $('wa-button').each(function(){
-        //     //     $(this).on('pressed', buttonHandler);
-        //     //   })
-        //     //   $('wa-pir').each(function(){
-        //     //     this.on('detected', detected);
-        //     //     this.on('ended', ended);
-        //     //   })
-        //     //   $('wa-ultrasonic').each(function(){
-        //     //     console.log(ping);
-        //     //     this.ping(ping, 300);
-        //     //   })
-        //     // })
-        // },500);
-
       }, false);
       console.log('Success');});
 })

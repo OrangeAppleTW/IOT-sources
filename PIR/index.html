@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>LED</title>
+  <title>PIR</title>
   <script src="../js/setup.js"></script>
 </head>
 <body>
-    <oa-house id="house"></oa-house>
+    <oa-light id="light"></oa-light>
     <web-arduino id="board" device='3Q55'>
-      <wa-led id='led' pin='10'></wa-led>
+      <wa-pir id='pir' pin='10'></wa-pir>
+      <wa-led id='led' pin='11'></wa-led>
     </web-arduino>
 </body>
 </html>
-

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ultrasonic Sensor</title>
+  <script src="setup.js"></script>
+</head>
+<body>
+    <oa-mail id="mail" number="0"></oa-mail>
+    <web-arduino id="board" device='3Q55'>
+      <wa-ultrasonic id='ultrasonic' trig='11' echo='10'></wa-ultrasonic>
+      <wa-led id='led' pin='9'></wa-led>
+    </web-arduino>
+</body>
+</html>

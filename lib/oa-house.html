@@ -5,11 +5,10 @@
             display: inline-block;
             width: 49%;
         }
-
         .room {
           height: 100%;
           position: relative;
-          background: url("http://www.3dhousedownload.com/wp-content/uploads/2013/05/Gray-wooden-floors-and-red-walls-in-living-room.jpg") no-repeat top center;
+          background: url("../img/house.jpg") no-repeat top center;
           background-size: cover;
         }
         .on .light {
@@ -19,7 +18,6 @@
         .on .switch {
           opacity: 1;
         }
-
         .bulb {
           opacity: 0.5;
           -webkit-transition: all 0.25s ease-out;
@@ -62,23 +60,19 @@
           -webkit-transition: all 0.25s ease-out;
                   transition: all 0.25s ease-out;
         }
-
         .switch {
           position: absolute;
           top: 50%;
           left: 25vw;
           opacity: 0.5;
         }
-
         .input-container {
           position: relative;
         }
-
         input[type="checkbox"] {
           opacity: 0;
           position: absolute;
         }
-
         label {
           width: 1.5rem;
           height: 3rem;
@@ -106,7 +100,6 @@
           border-top: 1px solid rgba(102, 102, 102, 0.5);
           height: 52%;
         }
-
         input[type="checkbox"]:checked + label {
           background-color: #ddd6d6;
         }
@@ -158,10 +151,10 @@
         var clone = thatDoc.importNode(template, true);
         shadowRoot.appendChild(clone);
 
-        // Caches the div
-        this.div = shadowRoot.querySelector("#house");
+        // Caches related elements
+        this.div = $(shadowRoot.querySelector("#house"));
+        this.light = $(shadowRoot.querySelector(".light"));
         this.Switch = shadowRoot.querySelector("#checkbox");
-        this.light = shadowRoot.querySelector(".light");
 
         // Checks if the "color" attribute has been overwritten
         if (this.hasAttribute('color')) {
@@ -177,21 +170,21 @@
         }
         // Checks if the "state" attribute has been overwritten
         if (this.hasAttribute('state')) {
-            var state = this.getAttribute('state');
-            this.setState(state);
+          var state = this.getAttribute('state');
+          if (state == "on"){
+            this.Switch.checked = true;
+          }
+          else {
+            this.Switch.checked = false;
+          }
+          this.setState(state);
         }
         else {
             this.setState("off");
         }
 
         // Bind the click event on switch
-        $(this.div).on('change', '#checkbox', $.proxy(function(){
-            if (this.Switch.checked){
-              this.setState('off');
-            }
-            else {
-              this.setState('on');
-            }
+        this.div.on('change', '#checkbox', $.proxy(function(){
             $(this).trigger('classChange');
         }, this));
     };
@@ -202,7 +195,6 @@
             this.setState(newVal);
         }
     };
-
     Object.defineProperty(ElementProto, 'state', {
         get: function(){
             return this._state
@@ -216,12 +208,10 @@
         this._state = val;
         this.div.className = val;
         if (val == 'on'){
-          this.Switch.checked = true;
-          $(this.light).css('border-bottom-color', 'rgba('+this._red+', '+this._green+', '+this._blue+',0.25)');
+          this.light.css('border-bottom-color', 'rgba('+this._red+', '+this._green+', '+this._blue+',0.25)');
         }
         else {
-          this.Switch.checked = false;
-          $(this.light).css('border-color', 'rgba(0, 0, 0, 0.85)');
+          this.light.css('border-color', 'rgba(0, 0, 0, 0.85)');
         }
     };
 
