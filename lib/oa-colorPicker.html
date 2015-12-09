@@ -161,14 +161,10 @@
 
         // Caches the div
         this.div = shadowRoot.querySelector("#picker");
-        this.red = shadowRoot.querySelector("#red");
-        this.green = shadowRoot.querySelector("#green");
-        this.blue = shadowRoot.querySelector("#blue");
-        this.swatch = shadowRoot.querySelector("#swatch");
-        var Red = shadowRoot.querySelector("#red"),
-            Green = shadowRoot.querySelector("#green"),
-            Blue = shadowRoot.querySelector("#blue"),
-            swatch = shadowRoot.querySelector("#swatch");
+        this.red = $(shadowRoot.querySelector("#red"));
+        this.green = $(shadowRoot.querySelector("#green"));
+        this.blue = $(shadowRoot.querySelector("#blue"));
+        this.swatch = $(shadowRoot.querySelector("#swatch"));
 
         function hexFromRGB(r, g, b) {
             var hex = [
@@ -185,11 +181,11 @@
         }
 
         function refreshSwatch() {
-            var red = $(this.red).slider("value"),
-                green = $(this.green).slider("value"),
-                blue = $(this.blue).slider("value"),
+            var red = this.Red(),
+                green = this.Green(),
+                blue = this.Blue(),
                 hex = hexFromRGB(red, green, blue);
-            $(this.swatch).css("background-color", "#" + hex);
+            this.swatch.css("background-color", "#" + hex);
             $(this).trigger('colorChange');
         }
         var properties = {
@@ -197,27 +193,25 @@
             range: "min",
             max: 255,
             step: 1,
-            value: 120,
+            value: 0,
             slide: $.proxy(refreshSwatch, this),
             change: $.proxy(refreshSwatch, this),
         }
 
-        $(this.red).slider(properties);
-        $(this.green).slider(properties);
-        $(this.blue).slider(properties);
-        $(this.swatch).css("background-color", "#" + hexFromRGB(120, 120, 120));
-
-
+        this.red.slider(properties);
+        this.green.slider(properties);
+        this.blue.slider(properties);
+        this.swatch.css("background-color", "#" + hexFromRGB(120, 120, 120));
     };
     // Attach get function of color
     ElementProto.Red = function() {
-        return $(this.red).slider("value");
+        return this.red.slider("value");
     }
     ElementProto.Green = function() {
-        return $(this.green).slider("value");
+        return this.green.slider("value");
     }
     ElementProto.Blue = function() {
-        return $(this.blue).slider("value");
+        return this.blue.slider("value");
     }
 
     // Registers <oa-colorPicker> in the main document
