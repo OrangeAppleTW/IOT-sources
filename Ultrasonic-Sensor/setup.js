@@ -26,11 +26,17 @@ $(document).ready(function(){
   $.when(load)
     .then(function(){
       window.addEventListener('WebComponentsReady', function() {
-        board.on('ready', function(){
-          $('wa-ultrasonic').each(function(){
-            this.ping(ping, 300);
-          })
-        })
+        function setupBoard(){
+          if (board.on != undefined){
+            board.on('ready', function(){
+              $('wa-ultrasonic').each(function(){
+                this.ping(ping, 300);
+              })
+            });
+            clearInterval(schedule);
+          }
+        }
+        var schedule = setInterval(setupBoard, 100);
       }, false);
       console.log('Success');});
 })
