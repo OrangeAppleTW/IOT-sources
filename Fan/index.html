@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fan</title>
+  <script src='https://rawgit.com/OrangeAppleTW/IOT-sources/master/Fan/setup.js'></script>
+</head>
+<body>
+    <oa-chart id="chart"><oa-chart>
+    <web-arduino id="board" device='3Q55'>
+      <wa-dht id='dht' pin='10'></wa-dht>
+      <wa-relay id='relay' pin='9'></wa-relay>
+    </web-arduino>
+</body>
+</html>
