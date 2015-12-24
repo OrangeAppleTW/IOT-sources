@@ -1,0 +1,130 @@
+<!-- Defines element markup -->
+<template>
+    <style>
+        .heart {
+          position: relative;
+          width: 100px;
+          height: 90px;
+          margin: 55px auto;
+          animation: b 1.5s ease-in-out infinite;
+        }
+
+        .heart:before,
+        .heart:after {
+          position: absolute;
+          content: "";
+          left: 50px;
+          top: 0;
+          width: 50px;
+          height: 80px;
+          background: red;
+          -moz-border-radius: 50px 50px 0 0;
+          -webkit-border-radius: 50px;
+          border-radius: 50px 50px 0 0;
+          -moz-transform: rotate(-45deg);
+          -ms-transform: rotate(-45deg);
+          -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+          -moz-transform-origin: 0 100%;
+          -ms-transform-origin: 0 100%;
+          -webkit-transform-origin: 0 100%;
+          transform-origin: 0 100%;
+        }
+
+        .heart:after {
+          left: 0;
+          -moz-box-shadow: 3px -45px 5px 3px rgba(255, 255, 255, 0.5);
+          -webkit-box-shadow: 3px -45px 5px 3px rgba(255, 255, 255, 0.5);
+          box-shadow: 3px -45px 5px 3px rgba(255, 255, 255, 0.5);
+          -moz-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+          -moz-transform-origin: 100% 100%;
+          -ms-transform-origin: 100% 100%;
+          -webkit-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
+        }
+        @keyframes b {
+          0% {
+            -moz-transform: scale(1, 1);
+            -ms-transform: scale(1, 1);
+            -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+          }
+          50% {
+            -moz-transform: scale(1.1, 1.1);
+            -ms-transform: scale(1.1, 1.1);
+            -webkit-transform: scale(1.1, 1.1);
+            transform: scale(1.1, 1.1);
+          }
+          100% {
+            -moz-transform: scale(1, 1);
+            -ms-transform: scale(1, 1);
+            -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+          }
+        }
+    </style>
+    <div id="cont">
+    </div>
+</template>
+
+<script>
+(function(window, document, undefined) {
+    // Refers to the "importer", which is index.html
+    var thatDoc = document;
+
+    // Refers to the "importee", which is src/oa-light.html
+    var thisDoc =  (thatDoc._currentScript || thatDoc.currentScript).ownerDocument;
+
+    // Gets content from <template>
+    var template = thisDoc.querySelector('template').content;
+
+    // Creates an object based in the HTML Element prototype
+    var ElementProto = Object.create(HTMLElement.prototype);
+
+    // Fires when an instance of the element is created
+    ElementProto.createdCallback = function() {
+        // Creates the shadow root
+        var shadowRoot = this.createShadowRoot();
+
+        // Adds a template clone into shadow root
+        var clone = thatDoc.importNode(template, true);
+        shadowRoot.appendChild(clone);
+
+        // Caches the div
+        this.div = $(shadowRoot.querySelector("#cont"));
+
+        // Checks if the "hearts" attribute has been overwritten
+        if (this.hasAttribute('hearts')) {
+            var hearts = this.getAttribute('hearts');
+            this.add(+hearts);
+        }
+        else {
+            this.add(1);
+        }
+    };
+
+    // Add one more heart
+    ElementProto.add = function(number) {
+        number = number || 1;
+        for (var i = 0; i < number; i++){
+            this.div.append('<div class="heart"></div>');
+        }
+    };
+    // Remove the last one heart
+    ElementProto.remove = function() {
+        this.div.find('.heart').last().remove();
+    };
+    // Remove the last one heart
+    ElementProto.get_hearts = function() {
+        return this.div.find('.heart').length;
+    };
+
+    // Registers <oa-heart> in the main document
+    window.OaElement = thatDoc.registerElement('oa-heart', {
+        prototype: ElementProto
+    });
+})(window, document);
+</script>
