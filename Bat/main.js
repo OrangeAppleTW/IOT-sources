@@ -5,7 +5,6 @@ function buttonHandler(){
 
 function touchedHandler(){
   heart.remove();
-  console.log(heart.get_hearts());
   if(heart.get_hearts() == 0){
     led.on();
   }
