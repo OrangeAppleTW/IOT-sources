@@ -1,4 +1,4 @@
-function main(){
+function houseHandler(){
   if (house.state == 'on') {
     led.off();
     house.state = 'off';

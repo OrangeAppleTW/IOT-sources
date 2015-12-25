@@ -99,14 +99,16 @@
         // Checks if the "hearts" attribute has been overwritten
         if (this.hasAttribute('hearts')) {
             var hearts = this.getAttribute('hearts');
+            this._hearts = +hearts;
             this.add(+hearts);
         }
         else {
+            this._hearts = 1
             this.add(1);
         }
     };
 
-    // Add one more heart
+    // Add hearts
     ElementProto.add = function(number) {
         number = number || 1;
         for (var i = 0; i < number; i++){
@@ -117,10 +119,12 @@
     ElementProto.remove = function() {
         this.div.find('.heart').last().remove();
     };
-    // Remove the last one heart
-    ElementProto.get_hearts = function() {
-        return this.div.find('.heart').length;
-    };
+    // Get the number of hearts
+    Object.defineProperty(ElementProto, 'hearts', {
+        get: function(){
+            return this._hearts
+        }
+    });
 
     // Registers <oa-heart> in the main document
     window.OaElement = thatDoc.registerElement('oa-heart', {
