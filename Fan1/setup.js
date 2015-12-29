@@ -15,7 +15,7 @@ $(document).ready(function(){
         })
         // Register event on OA-House
         $('oa-house').each(function(){
-          $(this).on('classChange', main);
+          $(this).on('classChange', houseHandler);
         })
         promise.resolve();
       }

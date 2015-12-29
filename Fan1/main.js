@@ -1,4 +1,4 @@
-function main(){
+function houseHandler(){
   if (house.state == 'on') {
     relay.off();
     house.state = 'off';
