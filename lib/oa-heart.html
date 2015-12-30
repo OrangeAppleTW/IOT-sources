@@ -123,6 +123,9 @@
     Object.defineProperty(ElementProto, 'hearts', {
         get: function(){
             return this._hearts
+        },
+        set: function(newVal){
+            this._hearts = newVal;
         }
     });
 
