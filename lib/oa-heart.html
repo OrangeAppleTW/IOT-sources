@@ -125,7 +125,9 @@
             return this._hearts
         },
         set: function(newVal){
+            this.div.find('.heart').remove();
             this._hearts = newVal;
+            this.add(newVal);
         }
     });
 
