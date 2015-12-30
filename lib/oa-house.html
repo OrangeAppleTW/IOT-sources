@@ -159,13 +159,13 @@
         // Checks if the "color" attribute has been overwritten
         if (this.hasAttribute('color')) {
             var color = this.getAttribute('color');
-            this._red = (parseInt(color.substring(0,2), 16)+1) || 247;
-            this._green = (parseInt(color.substring(2,4), 16)+1) || 246;
+            this._red = (parseInt(color.substring(0,2), 16)+1) || 20;
+            this._green = (parseInt(color.substring(2,4), 16)+1) || 50;
             this._blue = (parseInt(color.substring(4,6), 16)+1) || 245;
         }
         else {
-            this._red = 247;
-            this._green = 246;
+            this._red = 20;
+            this._green = 50;
             this._blue = 245;
         }
         // Checks if the "state" attribute has been overwritten

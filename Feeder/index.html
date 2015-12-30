@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feeder</title>
+  <script src='./setup.js'></script>
+</head>
+<body>
+    <input type="range"  min='-80' max='80' step='10'></input>
+    <p id="text">Here we go</p>
+    <web-arduino id="board" device='3Q55'>
+      <wa-servo id='servo' pin='11'></wa-servo>
+    </web-arduino>
+</body>
+</html>
