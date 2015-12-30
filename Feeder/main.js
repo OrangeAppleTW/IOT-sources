@@ -1,3 +1,3 @@
 function inputHandler(range){
-  text.innerHTML = range.target.value;
+  text.innerText = range.target.value;
 }

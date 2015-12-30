@@ -7,7 +7,7 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
 $(document).ready(function(){
   // Load all related files
   var load = $.Deferred(function(promise) {
-    $("head").load("./head.html", function(response, status, xhr){
+    $("head").load("https://rawgit.com/OrangeAppleTW/IOT-sources/master/Feeder/head.html", function(response, status, xhr){
       if (status == 'success'){
         // Register variables
         $('[id]').each(function(){
@@ -31,7 +31,10 @@ $(document).ready(function(){
         function setupBoard(){
           if (board.on != undefined){
             board.on('ready', function(){
-              console.log("Board is ready to go");
+              $('wa-pir').each(function(){
+                this.on('detected', detected);
+                this.on('ended', ended);
+              })
             });
             clearInterval(schedule);
           }

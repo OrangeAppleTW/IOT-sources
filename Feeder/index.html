@@ -2,10 +2,10 @@
 <html>
 <head>
   <title>Feeder</title>
-  <script src='./setup.js'></script>
+  <script src='https://rawgit.com/OrangeAppleTW/IOT-sources/master/Feeder/setup.js'></script>
 </head>
 <body>
-    <input type="range"  min='-80' max='80' step='10'></input>
+    <input type="range"  min='0' max='180' step='10'></input>
     <p id="text">Here we go</p>
     <web-arduino id="board" device='3Q55'>
       <wa-servo id='servo' pin='11'></wa-servo>
