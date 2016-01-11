@@ -25,20 +25,30 @@ $(document).ready(function(){
   $.when(load)
     .then(function(){
       window.addEventListener('WebComponentsReady', function() {
-      	var boards = [];
-      	$('web-arduino').each;
-        function setupBoard(){
-          if (board.on != undefined){
-            board.on('ready', function(){
-              $('wa-pir').each(function(){
-                this.on('detected', detected);
-                this.on('ended', ended);
-              })
-            });
-            clearInterval(schedule);
-          }
-        }
-        var schedule = setInterval(setupBoard, 100);
+      	var boards = $('web-arduino');
+      	var boards_ready = 0;
+      	boards.each(function(){
+      		this.setupBoard = function (){
+	          if (this.on != undefined){
+	          	if (boards_ready == boards.length){
+	          		this.on('ready', function(){
+		              $('wa-pir').each(function(){
+		                this.on('detected', detected);
+		                this.on('ended', ended);
+		              })
+		              $('wa-button').each(function(){
+		                this.on('pressed', buttonHandler);
+		              })
+		            });
+		            clearInterval(this.intervalID);
+	          	}
+	          	else {
+	          		boards_ready += 1;
+	          	}
+	          }
+	        }
+	        this.intervalID = setInterval(this.setupBoard, 100);
+      	});
       }, false);
       console.log('Success');});
 })
