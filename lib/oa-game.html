@@ -92,7 +92,7 @@
         this.highestScore = 0
 
         // Load runner js
-        $.getScript('../js/runner.js', $.proxy(function(){
+        $.getScript('https://rawgit.com/OrangeAppleTW/IOT-sources/master/js/runner.js', $.proxy(function(){
             this.runner = new Runner('.interstitial-wrapper', this, document);
         }, this));
 
