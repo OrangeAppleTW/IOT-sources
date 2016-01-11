@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feeder</title>
+  <script src='https://rawgit.com/OrangeAppleTW/IOT-sources/master/Network/setup.js'></script>
+</head>
+<body>
+    <web-arduino id="board1" device='ID填這'>
+    	<wa-relay id='relay' pin='腳位填這'></wa-relay>
+  	</web-arduino>
+	  
+	 <web-arduino id="board2" device='ID填這'>
+	    <wa-button id='button' pin='腳位填這'></wa-button>
+	    <wa-led id='led' pin='腳位填這'></wa-led>
+	 </web-arduino>
+</body>
+</html>
