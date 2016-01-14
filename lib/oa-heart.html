@@ -99,7 +99,7 @@
         // Checks if the "hearts" attribute has been overwritten
         if (this.hasAttribute('hearts')) {
             var hearts = this.getAttribute('hearts');
-            this._hearts = +hearts;
+            this._hearts = 0;
             this.add(+hearts);
         }
         else {
@@ -120,8 +120,9 @@
     ElementProto.remove = function() {
         if (this._hearts > 0){
           this._hearts -= 1;
+          this.div.find('.heart').last().remove();
         }
-        this.div.find('.heart').last().remove();
+        console.log(this._hearts);
     };
     // Get the number of hearts
     Object.defineProperty(ElementProto, 'hearts', {
