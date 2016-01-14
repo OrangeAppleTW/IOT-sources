@@ -111,12 +111,16 @@
     // Add hearts
     ElementProto.add = function(number) {
         number = number || 1;
+        this._hearts += number;
         for (var i = 0; i < number; i++){
             this.div.append('<div class="heart"></div>');
         }
     };
     // Remove the last one heart
     ElementProto.remove = function() {
+        if (this._hearts > 0){
+          this._hearts -= 1;
+        }
         this.div.find('.heart').last().remove();
     };
     // Get the number of hearts
