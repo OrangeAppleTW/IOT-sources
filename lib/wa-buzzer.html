@@ -67,11 +67,16 @@
       }
     };
 
-    proto.play = function() {
-      if (this.notes) {
-        this.buzzer.play(this.notes.split(','), this.tempos.split(','));
-      } else if (this.frequency) {
-        this.buzzer.tone(parseInt(this.frequency), parseInt(this.duration));
+    proto.play = function(notes) {
+      if (notes){
+        this.buzzer.play([notes],this.tempos.split(','));
+      }
+      else{
+        if (this.notes) {
+          this.buzzer.play(this.notes.split(','), this.tempos.split(','));
+        } else if (this.frequency) {
+          this.buzzer.tone(parseInt(this.frequency), parseInt(this.duration));
+        }
       }
     };
 

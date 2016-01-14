@@ -1,4 +1,3 @@
 function pianoHandler(){
-  buzzer.setNotes(piano.Note());
-  buzzer.play();
+  buzzer.play(piano.Note());
 }
