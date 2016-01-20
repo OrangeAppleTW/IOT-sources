@@ -30,6 +30,10 @@ $(document).ready(function(){
               $('wa-button').each(function(){
                 this.on('pressed', buttonHandler);
               })
+              $('wa-pir').each(function(){
+                this.on('detected', detected);
+                this.on('ended', ended);
+              })
             });
             clearInterval(schedule);
           }
