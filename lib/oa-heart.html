@@ -122,7 +122,6 @@
           this._hearts -= 1;
           this.div.find('.heart').last().remove();
         }
-        console.log(this._hearts);
     };
     // Get the number of hearts
     Object.defineProperty(ElementProto, 'hearts', {
@@ -131,7 +130,7 @@
         },
         set: function(newVal){
             this.div.find('.heart').remove();
-            this._hearts = newVal;
+            this._hearts = 0;
             this.add(newVal);
         }
     });
