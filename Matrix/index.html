@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Matrix</title>
+  <script src="https://rawgit.com/OrangeAppleTW/IOT-sources/master/Matrix/setup.js"></script>
+</head>
+<body>
+    <button id="btn" class="button">顯示圖案</button>
+	<web-arduino id="board" device='XP9K'>
+      <wa-max7219 id='matrix' din='7' cs='8' clk='9' data='316aaaa4a4aa6a31'></wa-led>
+    </web-arduino>
+</body>
+</html>
+
