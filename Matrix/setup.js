@@ -9,11 +9,7 @@ $(document).ready(function(){
   var load = $.Deferred(function(promise) {
     $("head").load("https://rawgit.com/OrangeAppleTW/IOT-sources/master/Matrix/head.html", function(response, status, xhr){
       if (status == 'success'){
-        $(btn).on('click',function(){
-        	var matrix = $('wa-max7219')[0];
-        	matrix.animateStop();
-        	matrix.on(matrix.data);
-        })
+        $(btn).on('click',click);
         // Register event on OA-House
         
         promise.resolve();
