@@ -27,12 +27,8 @@ $(document).ready(function(){
         function setupBoard(){
           if (board.on != undefined){
             board.on('ready', function(){
-              $('wa-button').each(function(){
-                this.on('pressed', buttonHandler);
-              })
-              $('wa-pir').each(function(){
-                this.on('detected', detected);
-                this.on('ended', ended);
+              $('wa-ultrasonic').each(function(){
+                this.ping(ping, 300);
               })
             });
             clearInterval(schedule);
