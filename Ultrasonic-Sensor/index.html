@@ -3,10 +3,12 @@
 <head>
   <title>Ultrasonic Sensor</title>
   <script src="https://rawgit.com/OrangeAppleTW/IOT-sources/master/Ultrasonic-Sensor/setup.js"></script>
+  <script src="./setup.js"></script>
 </head>
 <body>
     <oa-mail id="mail" number="0"></oa-mail>
-    <web-arduino id="board" device='3Q55'>
+    <p id='distance'></p>
+    <web-arduino id="board" device='XP9K'>
       <wa-ultrasonic id='ultrasonic' trig='11' echo='10'></wa-ultrasonic>
       <wa-led id='led' pin='9'></wa-led>
     </web-arduino>
