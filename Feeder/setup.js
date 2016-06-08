@@ -35,6 +35,9 @@ $(document).ready(function(){
                 this.on('detected', detected);
                 this.on('ended', ended);
               })
+              $('wa-ultrasonic').each(function(){
+                this.ping(ping, 300);
+              })
             });
             clearInterval(schedule);
           }
