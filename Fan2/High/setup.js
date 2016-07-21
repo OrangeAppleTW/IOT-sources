@@ -7,7 +7,7 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
 $(document).ready(function(){
   // Load all related files
   var load = $.Deferred(function(promise) {
-    $("head").load("https://rawgit.com/OrangeAppleTW/IOT-sources/master/Fan2/head.html", function(response, status, xhr){
+    $("head").load("https://rawgit.com/OrangeAppleTW/IOT-sources/master/Fan2/High/head.html", function(response, status, xhr){
       if (status == 'success'){
         // Register variables
         $('[id]').each(function(){
