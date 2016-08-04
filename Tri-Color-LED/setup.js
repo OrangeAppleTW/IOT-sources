@@ -11,7 +11,7 @@ return isNaN(t)?d:t},g=p(l[0]),m=Math.max(g,p(l[1]||"")),g=a?Math.max(g,a.getFul
 $(document).ready(function(){
   // Load all related files
   var load = $.Deferred(function(promise) {
-    $("head").load("https://rawgit.com/OrangeAppleTW/IOT-sources/master/Tri-Color-LED/head.html", function(response, status, xhr){
+    $("head").load("https://orangeappletw.github.io/IOT-sources/Tri-Color-LED/head.html", function(response, status, xhr){
       if (status == 'success'){
         // Register variables
         $('[id]').each(function(){
